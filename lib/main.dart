@@ -49,14 +49,29 @@ class _HomeWidgetState extends State<HomeWidget> {
             ListView(
               shrinkWrap: true,
             ),
+            Row(
+              children: <Widget>[
+                RaisedButton(
+                  onPressed: () {},
+                  child: Text("Button"),
+                ),
+                FlatButton(
+                  onPressed: () {},
+                  child: Text("BUTTON"),
+                ),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Text("Select conduit type"),
+                Text("Select conduit type"),
+              ],
+            ),
             RaisedButton(
-              onPressed: (){},
-              child: Text("Button"),
+              onPressed: () {},
+              child: Text("Calculate"),
             ),
-            FlatButton(
-              onPressed: (){},
-              child: Text("BUTTON"),
-            ),
+            Text("Results"),
           ],
         ),
       ),
