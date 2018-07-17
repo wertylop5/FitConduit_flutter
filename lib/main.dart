@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "util/enums.dart";
 
 void main() => runApp(MainApp());
 
@@ -20,6 +21,7 @@ class HomeWidget extends StatefulWidget {
 
 class _HomeWidgetState extends State<HomeWidget> {
   String _popupValue;
+  ConduitType _selectedConduit;
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +36,10 @@ class _HomeWidgetState extends State<HomeWidget> {
               });
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-              PopupMenuItem<String>(
-                child: Text("About"),
-              ),
-            ],
+                  PopupMenuItem<String>(
+                    child: Text("About"),
+                  ),
+                ],
           ),
         ],
       ),
@@ -74,16 +76,20 @@ class _HomeWidgetState extends State<HomeWidget> {
                   ),
                   child: Text("Select conduit type"),
                 ),
-                DropdownButton<String>(
-                  onChanged: (String value) {},
-                  items: <DropdownMenuItem<String>>[
-                    DropdownMenuItem<String>(
-                      child: Text("Conduit 1"),
-                    ),
-                    DropdownMenuItem<String>(
-                      child: Text("Conduit 2"),
-                    ),
-                  ],
+                DropdownButton<ConduitType>(
+                  onChanged: (ConduitType value) {
+                    setState(() {
+                      _selectedConduit = value;
+                    });
+                  },
+                  items: ConduitType.values
+                      .map<DropdownMenuItem<ConduitType>>(
+                          (ConduitType item) => DropdownMenuItem<ConduitType>(
+                                child: Text(getConduitString(item)),
+                                value: item,
+                              ))
+                      .toList(),
+                  value: _selectedConduit,
                 ),
               ],
             ),
@@ -101,4 +107,3 @@ class _HomeWidgetState extends State<HomeWidget> {
     );
   }
 }
-
