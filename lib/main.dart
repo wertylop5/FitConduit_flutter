@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "util/enums.dart";
+import "view/cable.dart";
 
 void main() => runApp(MainApp());
 
@@ -54,7 +55,40 @@ class _HomeWidgetState extends State<HomeWidget> {
             ),
             Container(
               height: 300.0,
-              child: ListView(),
+              child: ListView(
+                children: <Widget>[
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                  Cable(),
+                ],
+              ),
             ),
             Row(
               children: <Widget>[
