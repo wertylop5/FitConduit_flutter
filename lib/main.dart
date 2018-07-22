@@ -54,7 +54,10 @@ class _HomeWidgetState extends State<HomeWidget> {
               textScaleFactor: 1.5,
             ),
             Container(
-              height: 300.0,
+              height: 240.0,
+              padding: EdgeInsets.symmetric(
+                vertical: 5.0,
+              ),
               child: ListView(
                 children: <Widget>[
                   CableRow(),

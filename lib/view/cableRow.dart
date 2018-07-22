@@ -16,34 +16,42 @@ class _CableRowState extends State<CableRow> {
   
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: 10.0,
-      ),
-      child: Row(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(
-              right: 15.0,
-            ),
-            child: Text(
-              "Cable 10",
-              textScaleFactor: 1.4,
-            ),
-          ),
-          Expanded(
-            child: Container(
+    return InkWell(
+      onLongPress: () {
+        print("long pressed item");
+      },
+      onTap: () {
+        print("tapped item");
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          vertical: 10.0,
+        ),
+        child: Row(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(
+                right: 15.0,
+              ),
               child: Text(
-                "Cable name",
+                "Cable 10",
+                textScaleFactor: 1.4,
               ),
             ),
-          ),
-          Container(
-            child: Text(
-              "Amount: 10",
+            Expanded(
+              child: Container(
+                child: Text(
+                  "Cable name",
+                ),
+              ),
             ),
-          ),
-        ],
+            Container(
+              child: Text(
+                "Amount: 10",
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
