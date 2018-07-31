@@ -1,0 +1,80 @@
+name,od
+FO 36str SMF armored,0.72
+FO 48str SMF armored,0.78
+FO 2str S/MMF breakout,0.212
+FO 6str S/MMF breakout,0.335
+FO 12str S/MMF breakout,0.425
+FO 24str S/MMF breakout,0.575
+FO 48str S/MMF breakout,0.75
+FO 2str S/MMF rodent resist brkout,0.412
+FO 6str S/MMF rodent resist brkout,0.49
+FO 12str S/MMF rodent resist brkout,0.626
+FO 24str S/MMF rodent resist brkout,0.65
+FO 48str S/MMF rodent resist brkout,0.97
+FO patchcord 3mm,0.118
+Data CAT5e UTP Plenum (ADC),0.185
+Data CAT5e UTP 24AWG (General),0.248
+Data CAT5e ScTP 24AWG,0.31
+Data CAT6 UTP 28AWG (Comtran),0.145
+Data CAT6 UTP Plenum (ADC),0.212
+Data CAT6 UTP 23AWG (General),0.272
+Data CAT6 ScTP 24AWG,0.31
+Data T1 2PR 22AWG,0.3
+Copper 2PR 22AWG,0.38
+Copper 2PR 19AWG,0.41
+Copper 3PR 22AWG (mic),0.295
+Copper 3PR 22AWG (asm),0.27
+Copper 4PR 22AWG,0.44
+Copper 4PR 19AWG,0.5
+Copper 6PR 22AWG,0.5
+Copper 6PR 19AWG,0.6
+Copper 6PR 16AWG,0.7
+Copper 12PR 22AWG,0.6
+Copper 25PR 24AWG,0.6
+Copper 25PR 22AWG,0.76
+Copper 50PR 24AWG,0.75
+Copper 50PR 22AWG,0.95
+Copper 75PR 22AWG,1.13
+Copper 100PR 24AWG,1.00
+Copper 100PR 22AWG,1.25
+Copper 150PR 22AWG,1.5
+Copper 200PR 24AWG,1.25
+Copper 200PR 22AWG,1.67
+Copper QUAD 22AWG,0.15
+Speaker cable 1PR 18AWG,0.256
+Coax RG6 quad shield plen.,0.273
+Coax RG6 tri shield,0.278
+Coax RG6 quad shield,0.297
+Coax RG59 quad shield plen.,0.235
+Coax RG59 tri shield,0.244
+Coax RG59 quad shield,0.265
+Coax RG11 quad shield plen.,0.38
+Power Superv. 6PR 16AWG,0.8
+Power Superv. 12PR 16AWG,1.17
+Power Superv. 25PR 16AWG,1.6
+Power Superv. 50PR 16AWG,2.12
+Power THHN/THWN 16AWG,0.096
+Power THHN/THWN 14AWG,0.111
+Power THHN/THWN 12AWG,0.130
+Power THHN/THWN 10AWG,0.164
+Power THHN/THWN 8AWG,0.216
+Power THHN/THWN 6AWG,0.254
+Power THHN/THWN 4AWG,0.324
+Power THHN/THWN 2AWG,0.384
+Power THHN/THWN 1AWG,0.446
+Power XHHW 14AWG,0.133
+Power XHHW 12AWG,0.152
+Power XHHW 10AWG,0.176
+Power XHHW 8AWG,0.236
+Power XHHW 6AWG,0.274
+Power XHHW 4AWG,0.322
+Power XHHW 2AWG,0.382
+Power XHHW 1AWG,0.442
+Power RHH/RHW 14AWG,0.193
+Power RHH/RHW 12AWG,0.212
+Power RHH/RHW 10AWG,0.236
+Power RHH/RHW 8AWG,0.326
+Power RHH/RHW 6AWG,0.364
+Power RHH/RHW 4AWG,0.412
+Power RHH/RHW 2AWG,0.472
+Power RHH/RHW 1AWG,0.582
