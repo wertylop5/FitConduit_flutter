@@ -45,7 +45,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Database>(
-      future: dbOpen(),
+      future: dbOpen(context),
       builder: (BuildContext context,
           AsyncSnapshot<Database> snapshot) => Scaffold(
         appBar: AppBar(
