@@ -2,15 +2,13 @@ import "package:flutter/material.dart";
 import "package:sqflite/sqflite.dart";
 
 import "model/cable.dart";
+import "model/conduit.dart";
 import "util/enums.dart";
 import "util/db.dart";
 import "view/about.dart";
+import "view/addCable.dart";
 import "view/cableRow.dart";
 import "view/defaultAppBar.dart";
-
-const PATH_ABOUT = "/about";
-const PATH_ADD_CABLE = "/add-cable";
-const PATH_ADD_CABLE_UNNAMED = "/add-cable-unnamed";
 
 void main() {
   
@@ -25,7 +23,8 @@ class MainApp extends StatelessWidget {
       theme: ThemeData.dark(),
       home: HomeWidget(),
       routes: <String, WidgetBuilder>{
-        PATH_ABOUT: (BuildContext context) => AboutWidget(),
+        RoutePaths.PATH_ABOUT:
+          (BuildContext context) => AboutWidget(),
         /*
         PATH_ADD_CABLE:
           (BuildContext context) => AddCableWidget(),
@@ -46,6 +45,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   ConduitType _selectedConduit;
   Database _db;
   List<Cable> _cables;
+  List<Conduit> _conduits;
   
   //enabled when all cables are loaded
   bool _buttonsEnabled = true;
@@ -62,6 +62,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         setState(() async {
           _db = db;
           _cables = await getCables(db);
+          _conduits = await getConduits(db);
         });
         return db;
       }),
@@ -115,8 +116,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                     onPressed: snapshot.connectionState
                       == ConnectionState.done ?
                           () {
-                            Navigator.pushNamed(
-                                context, PATH_ADD_CABLE);
+                            Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                maintainState: false,
+                                builder:
+                                  (BuildContext context) =>
+                                    AddCableWidget(_cables, null),
+                              ),
+                            );
                           } :
                           null,
                     child: Text("ADD A NEW CABLE"),
@@ -127,7 +135,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                           () {
                             Navigator.pushNamed(
                                 context,
-                                PATH_ADD_CABLE_UNNAMED);
+                                RoutePaths.PATH_ADD_CABLE_UNNAMED,
+                                );
                           } :
                           null,
                     child: Text("ADD A NEW UNNAMED CABLE"),

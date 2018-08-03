@@ -8,9 +8,12 @@ import "package:path/path.dart";
 import "package:sqflite/sqflite.dart";
 
 import "../model/cable.dart";
+import "../model/conduit.dart";
+import "enums.dart";
 
 const DATA_PATH = "lib/data/";
 const CABLE_INIT_FILE = "cables.json";
+const CONDUIT_INIT_FILE = "conduits.json";
 
 const DB_FILE = "thing.db";
 const CABLE_TABLE = "cables";
@@ -28,6 +31,7 @@ void _createTables(Database db) async {
   await db.execute("""
     CREATE TABLE conduits (
       id INTEGER PRIMARY KEY,
+      type TEXT,
       name TEXT,
       area REAL
     );
@@ -55,28 +59,33 @@ void _createTables(Database db) async {
   """);
 }
 
-void _addInitData(Database db, BuildContext context) {
+void _addInitData(Database db, BuildContext context) async {
   //for getting the data file
   AssetBundle bundle = DefaultAssetBundle.of(context);
   
-  Stream.fromFuture(bundle.loadString(
-      join(DATA_PATH, CABLE_INIT_FILE)))
-    .transform(json.decoder)//string to dynamic type
-    .listen((dynamic data) {//should be a list
-      print(data.length);
-      
-      Batch batch = db.batch();
-      data.forEach((dynamic elem) {
-        batch.insert(CABLE_TABLE, {
-          "name": elem["name"],
-          "od": elem["od"],
-        });
-      });
-      
-      batch.commit().then((List<dynamic> value) {
-        print(value);
-      });
+  dynamic cableData = json.decode(await bundle.loadString(
+      join(DATA_PATH, CABLE_INIT_FILE)));
+  dynamic conduitData = json.decode(await bundle.loadString(
+      join(DATA_PATH, CONDUIT_INIT_FILE)));
+  
+  Batch batch = db.batch();
+  cableData.forEach((dynamic elem) {
+    batch.insert(CABLE_TABLE, {
+      "name": elem["name"],
+      "od": elem["od"],
     });
+  });
+  conduitData.forEach((dynamic elem) {
+    batch.insert(CONDUIT_TABLE, {
+      "type": elem["type"],
+      "name": elem["name"],
+      "area": elem["area"],
+    });
+  });
+  
+  batch.commit().then((List<dynamic> value) {
+    print(value);
+  });
 }
 
 Future<Database> dbOpen(BuildContext context) async {
@@ -91,6 +100,7 @@ Future<Database> dbOpen(BuildContext context) async {
       onOpen: (Database db) async {
         print("db opened");
         //await getCables(db);
+        //await getConduits(db);
         //await dbDelete();
       },
   );
@@ -109,8 +119,21 @@ Future<List<Cable>> getCables(Database db) async {
   
   List<Cable> res = List();
   results.forEach((Map<String, dynamic> elem) {
-    //print("${elem["name"]}: ${elem["od"]}");
     res.add(Cable(elem["name"], elem["od"]));
+  });
+  return res;
+}
+
+Future<List<Conduit>> getConduits(Database db) async {
+  List<Map<String, dynamic>> results = 
+    await db.query(CONDUIT_TABLE);
+  
+  List<Conduit> res = List();
+  results.forEach((Map<String, dynamic> elem) {
+    res.add(Conduit(
+          getConduitType(elem["type"]),
+          elem["name"],
+          elem["area"]));
   });
   return res;
 }

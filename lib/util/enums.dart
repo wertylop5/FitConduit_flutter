@@ -22,3 +22,12 @@ String getConduitString(ConduitType type) {
   }
 }
 
+ConduitType getConduitType(String name) {
+  switch(name) {
+    case "RMC":
+      return ConduitType.RMC;
+    case "EMT":
+      return ConduitType.EMT;
+  }
+}
+
