@@ -7,7 +7,7 @@ import "package:flutter/services.dart";
 import "package:path/path.dart";
 import "package:sqflite/sqflite.dart";
 
-import "../model/Cable.dart";
+import "../model/cable.dart";
 
 const DATA_PATH = "lib/data/";
 const CABLE_INIT_FILE = "cables.json";
@@ -43,10 +43,14 @@ void _createTables(Database db) async {
   """);
   
   //mapping of cables used in a workspace
+  //cable_known: 1 use cable_id, 0 use od
   await db.execute("""
     CREATE TABLE workspace_cables (
       workspace_id INTEGER,
-      cable_id INTEGER
+      cable_known INTEGER,
+      cable_id INTEGER,
+      od REAL,
+      cable_count INTEGER
     );
   """);
 }
@@ -80,19 +84,19 @@ Future<Database> dbOpen(BuildContext context) async {
   return await openDatabase(join(dbPath, DB_FILE),
       version: 1,
       onCreate: (Database db, int version) {
+        _createTables(db);
+        _addInitData(db, context);
         print("db created");
-        //_addInitData(db);
       },
       onOpen: (Database db) async {
         print("db opened");
-        //_createTables(db);
-        //_addInitData(db, context);
-        await getCables(db);
+        //await getCables(db);
+        //await dbDelete();
       },
   );
 }
 
-void dbDelete() async {
+Future dbDelete() async {
   String dbPath = await getDatabasesPath();
   await deleteDatabase(join(dbPath, DB_FILE));
   print("db deleted");
@@ -103,8 +107,11 @@ Future<List<Cable>> getCables(Database db) async {
   List<Map<String, dynamic>> results = 
     await db.query(CABLE_TABLE);
   
+  List<Cable> res = List();
   results.forEach((Map<String, dynamic> elem) {
-    print("${elem["name"]}: ${elem["od"]}");
+    //print("${elem["name"]}: ${elem["od"]}");
+    res.add(Cable(elem["name"], elem["od"]));
   });
+  return res;
 }
 
