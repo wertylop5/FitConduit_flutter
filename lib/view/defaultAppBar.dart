@@ -3,7 +3,7 @@ import "package:flutter/material.dart";
 import "../util/enums.dart";
 
 AppBar getAppbar(BuildContext context, String curRoute) {
-  PopupMenuButton<String> button = null;
+  PopupMenuButton<String> button;
   if (curRoute != RoutePaths.PATH_ABOUT) {
     button = PopupMenuButton<String>(
       onSelected: (String value) {

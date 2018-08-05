@@ -20,6 +20,7 @@ String getConduitString(ConduitType type) {
     case ConduitType.EMT:
       return "EMT";
   }
+  return null;
 }
 
 ConduitType getConduitType(String name) {
@@ -29,5 +30,6 @@ ConduitType getConduitType(String name) {
     case "EMT":
       return ConduitType.EMT;
   }
+  return null;
 }
 

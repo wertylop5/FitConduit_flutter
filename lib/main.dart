@@ -46,9 +46,38 @@ class _HomeWidgetState extends State<HomeWidget> {
   Database _db;
   List<Cable> _cables;
   List<Conduit> _conduits;
+  List<CableRow> _createdCables = [];
   
   //enabled when all cables are loaded
   bool _buttonsEnabled = true;
+  
+  void createButtonAction(BuildContext context) async {
+    /*
+       form:
+       {
+        "cable": <Cable>,
+        "amount": <int>
+       }
+    */
+    Map createdCable = await Navigator.push(
+      context,
+      new MaterialPageRoute(
+        maintainState: true,
+        builder:
+          (BuildContext context) =>
+            AddCableWidget(_cables, null),
+      ),
+    );
+    
+    setState(() {
+      _createdCables.add(CableRow(
+        _createdCables.length,
+        createdCable["cable"],
+        createdCable["amount"]
+      ));
+    });
+  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -83,31 +112,12 @@ class _HomeWidgetState extends State<HomeWidget> {
                 padding: EdgeInsets.symmetric(
                   vertical: 5.0,
                 ),
-                child: ListView(
-                  children: <Widget>[
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                    CableRow(),
-                  ],
+                child: ListView.builder(
+                  itemCount: _createdCables.length,
+                  itemBuilder: (BuildContext context,
+                    int index) {
+                    return _createdCables[index];
+                  },
                 ),
               ),
               Row(
@@ -115,17 +125,34 @@ class _HomeWidgetState extends State<HomeWidget> {
                   FlatButton(
                     onPressed: snapshot.connectionState
                       == ConnectionState.done ?
-                          () {
-                            Navigator.push(
-                              context,
-                              new MaterialPageRoute(
-                                maintainState: false,
-                                builder:
-                                  (BuildContext context) =>
-                                    AddCableWidget(_cables, null),
-                              ),
-                            );
-                          } :
+                          () async {
+                            print(_createdCables.length);
+                        /*
+                           form:
+                           {
+                            "cable": <Cable>,
+                            "amount": <int>
+                           }
+                        */
+                        Map createdCable = await Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                            maintainState: true,
+                            builder:
+                              (BuildContext context) =>
+                                AddCableWidget(_cables, null),
+                          ),
+                        );
+                        
+                        print("setting state");
+                        setState(() {
+                           _createdCables.add(CableRow(
+                            _createdCables.length,
+                            createdCable["cable"],
+                            createdCable["amount"]
+                          ));
+                        });
+                      } :
                           null,
                     child: Text("ADD A NEW CABLE"),
                   ),
