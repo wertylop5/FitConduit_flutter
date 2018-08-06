@@ -119,7 +119,7 @@ Future<List<Cable>> getCables(Database db) async {
   
   List<Cable> res = List();
   results.forEach((Map<String, dynamic> elem) {
-    res.add(Cable(elem["name"], elem["od"]));
+    res.add(Cable(elem["od"], elem["name"]));
   });
   return res;
 }

@@ -55,7 +55,9 @@ class _CableRowState extends State<CableRow> {
             Expanded(
               child: Container(
                 child: Text(
-                  "${_cable.getName}",
+                  _cable.getName != null ? 
+                  "${_cable.getName}" :
+                  "od: ${_cable.getOd}",
                 ),
               ),
             ),

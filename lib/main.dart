@@ -86,7 +86,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     return FutureBuilder<Database>(
       //writing like this so we don't need
       //to manually create a Future object
-      future: dbOpen(context).then((db) {
+      future: dbOpen(context).then((db) async {
         print("db");
         setState(() async {
           _db = db;
@@ -114,6 +114,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                 ),
                 child: ListView.builder(
                   itemCount: _createdCables.length,
+                  //itemExtent: 50.0,
                   itemBuilder: (BuildContext context,
                     int index) {
                     return _createdCables[index];
@@ -127,43 +128,72 @@ class _HomeWidgetState extends State<HomeWidget> {
                       == ConnectionState.done ?
                           () async {
                             print(_createdCables.length);
-                        /*
-                           form:
-                           {
-                            "cable": <Cable>,
-                            "amount": <int>
-                           }
-                        */
-                        Map createdCable = await Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                            maintainState: true,
-                            builder:
-                              (BuildContext context) =>
-                                AddCableWidget(_cables, null),
-                          ),
-                        );
-                        
-                        print("setting state");
-                        setState(() {
-                           _createdCables.add(CableRow(
-                            _createdCables.length,
-                            createdCable["cable"],
-                            createdCable["amount"]
-                          ));
-                        });
-                      } :
+                            /*
+                               form:
+                               {
+                                "cable": <Cable>,
+                                "amount": <int>
+                               }
+                            */
+                            Map createdCable =
+                              await Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                maintainState: true,
+                                builder:
+                                  (BuildContext context) =>
+                                    AddCableWidget(_cables, true),
+                              ),
+                            );
+                            
+                            if (createdCable != null) {
+                              setState(() {
+                                 _createdCables.add(
+                                   CableRow(
+                                    _createdCables.length,
+                                    createdCable["cable"],
+                                    createdCable["amount"]
+                                ));
+                              });
+                            }
+                          } :
                           null,
                     child: Text("ADD A NEW CABLE"),
                   ),
                   FlatButton(
                     onPressed: snapshot.connectionState
                       == ConnectionState.done ?
-                          () {
-                            Navigator.pushNamed(
-                                context,
-                                RoutePaths.PATH_ADD_CABLE_UNNAMED,
-                                );
+                          //can't factor this out :/
+                          () async {
+                            print(_createdCables.length);
+                            /*
+                               form:
+                               {
+                                "cable": <Cable>,
+                                "amount": <int>
+                               }
+                            */
+                            Map createdCable =
+                              await Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                maintainState: true,
+                                builder:
+                                  (BuildContext context) =>
+                                    AddCableWidget(_cables, false),
+                              ),
+                            );
+                            
+                            if (createdCable != null) {
+                              setState(() {
+                                 _createdCables.add(
+                                   CableRow(
+                                    _createdCables.length,
+                                    createdCable["cable"],
+                                    createdCable["amount"]
+                                ));
+                              });
+                            }
                           } :
                           null,
                     child: Text("ADD A NEW UNNAMED CABLE"),

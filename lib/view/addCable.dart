@@ -7,24 +7,26 @@ import "../view/defaultAppBar.dart";
 
 class AddCableWidget extends StatefulWidget {
   final List<Cable> _cables;
-  final List<Conduit> _conduits;
+  final bool _cableKnown;
   
-  AddCableWidget(this._cables, this._conduits);
+  AddCableWidget(this._cables, this._cableKnown);
   
   @override
   State createState() => _AddCableWidgetState(
       _cables,
-      _conduits);
+      _cableKnown);
 }
 
 class _AddCableWidgetState extends State<AddCableWidget> {
   List<Cable> _cables;
-  List<Conduit> _conduits;
   int _optionSelected = 0;
   int _cableAmount = 0;
+  bool _cableKnown;
+  double _manualOd;
   
-  _AddCableWidgetState(this._cables, this._conduits);
+  _AddCableWidgetState(this._cables, this._cableKnown);
 
+  /*
   List<DropdownMenuItem<int>> _makeMenuItems() {
     List<DropdownMenuItem<int>> res = [];
     for (int x = 0; x < _cables.length; x++) {
@@ -35,6 +37,7 @@ class _AddCableWidgetState extends State<AddCableWidget> {
     }
     return res;
   }
+  */
 
   List<SimpleDialogOption> _makeDialogOptions(
       BuildContext context) {
@@ -56,10 +59,14 @@ class _AddCableWidgetState extends State<AddCableWidget> {
         child: Column(
           children: <Widget>[
             Text(
+            _cableKnown ? 
               """
 Selected cable: ${_cables[_optionSelected].getName}
-"""
+"""         :
+            "Enter od:"
             ),
+            _cableKnown ? 
+            //show list of cables
             FlatButton(
               onPressed: () async {
                 int selected = await showDialog<int>(
@@ -80,21 +87,17 @@ Selected cable: ${_cables[_optionSelected].getName}
                 }
               },
               child: Text("Click to select"),
-            ),
-            /*
-            Slider(
-              value: _cableAmount,
-              min: 0.0,
-              max: 10.0,
-              divisions: 10,
-              label: "$_cableAmount",
-              onChanged: (double value) {
+            ) :
+            //show od entry field
+            TextField(
+              keyboardType: TextInputType.number,
+              maxLines: 1,
+              onChanged: (String value) {
                 setState(() {
-                  _cableAmount = value;
+                  _manualOd = double.parse(value);
                 });
               },
             ),
-            */
             TextField(
               keyboardType: TextInputType.number,
               maxLines: 1,
@@ -114,7 +117,9 @@ Selected cable: ${_cables[_optionSelected].getName}
                 Navigator.pop(
                   context,
                   {
-                    "cable": _cables[_optionSelected],
+                    "cable": _cableKnown ?
+                      _cables[_optionSelected] :
+                      Cable(_manualOd),
                     "amount": _cableAmount
                   },
                 );
