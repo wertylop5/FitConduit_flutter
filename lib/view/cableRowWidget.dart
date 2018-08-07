@@ -1,32 +1,30 @@
 import "package:flutter/material.dart";
 
 import "../model/cable.dart";
+import "../model/cableRow.dart";
 
 /*
   A widget used to represent a cable in the listview
 */
 
-class CableRow extends StatefulWidget {
-  final int _cableNum;//what position it is in the listview
-  final Cable _cable;
-  final int _cableAmount;
+class CableRowWidget extends StatefulWidget {
+  final CableRow _row;
 
-  CableRow(this._cableNum, this._cable, this._cableAmount);
+  CableRowWidget(this._row);
+  
+  CableRow get getRow => _row;
   
   @override
-  State createState() => _CableRowState(
-      _cableNum,
-      _cable,
-      _cableAmount);
+  State createState() => _CableRowState(_row);
 }
 
-class _CableRowState extends State<CableRow> {
-  int _cableNum;
-  Cable _cable;
-  int _cableAmount;
+class _CableRowState extends State<CableRowWidget> {
+  CableRow _row;
 
-  _CableRowState(this._cableNum,
-      this._cable, this._cableAmount);
+  _CableRowState(this._row);
+
+  int get getAmount => _row.getAmount;
+  Cable get getCable => _row.getCable;
   
   @override
   Widget build(BuildContext context) {
@@ -48,22 +46,22 @@ class _CableRowState extends State<CableRow> {
                 right: 15.0,
               ),
               child: Text(
-                "Cable $_cableNum",
+                "Cable ${_row.getNum}",
                 textScaleFactor: 1.4,
               ),
             ),
             Expanded(
               child: Container(
                 child: Text(
-                  _cable.getName != null ? 
-                  "${_cable.getName}" :
-                  "od: ${_cable.getOd}",
+                  _row.getCable.getName != null ? 
+                  "${_row.getCable.getName}" :
+                  "od: ${_row.getCable.getOd}",
                 ),
               ),
             ),
             Container(
               child: Text(
-                "Amount: $_cableAmount",
+                "Amount: ${_row.getAmount}",
               ),
             ),
           ],
