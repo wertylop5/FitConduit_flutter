@@ -2,6 +2,10 @@ enum ConduitType {
   RMC, EMT
 }
 
+enum CableOptions {
+  DELETE, EDIT
+}
+
 class RoutePaths {
   static const String PATH_ABOUT =
     "/about";

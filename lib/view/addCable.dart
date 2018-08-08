@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 
 import "../model/cable.dart";
+import "../model/cableRow.dart";
 import "../model/conduit.dart";
 import "../util/enums.dart";
 import "../view/defaultAppBar.dart";
@@ -8,13 +9,16 @@ import "../view/defaultAppBar.dart";
 class AddCableWidget extends StatefulWidget {
   final List<Cable> _cables;
   final bool _cableKnown;
+  final CableRow _editTarget;
   
-  AddCableWidget(this._cables, this._cableKnown);
+  AddCableWidget(this._cables,
+      this._cableKnown, [this._editTarget]);
   
   @override
   State createState() => _AddCableWidgetState(
       _cables,
-      _cableKnown);
+      _cableKnown,
+      _editTarget);
 }
 
 class _AddCableWidgetState extends State<AddCableWidget> {
@@ -23,21 +27,10 @@ class _AddCableWidgetState extends State<AddCableWidget> {
   int _cableAmount = 0;
   bool _cableKnown;
   double _manualOd;
+  CableRow _editTarget;
   
-  _AddCableWidgetState(this._cables, this._cableKnown);
-
-  /*
-  List<DropdownMenuItem<int>> _makeMenuItems() {
-    List<DropdownMenuItem<int>> res = [];
-    for (int x = 0; x < _cables.length; x++) {
-      res.add(DropdownMenuItem<int>(
-        value: x,
-        child: Text("${_cables[x].getName}"),
-      ));
-    }
-    return res;
-  }
-  */
+  _AddCableWidgetState(this._cables,
+      this._cableKnown, this._editTarget);
 
   List<SimpleDialogOption> _makeDialogOptions(
       BuildContext context) {
